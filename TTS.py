@@ -21,11 +21,21 @@ with open('./speech.mp3', 'wb') as audio_file:
     res = tts.synthesize("Hello WORLD WORLD WORLD WORLD", accept='audio/mp3', voice='en-US_LisaV3Voice').get_result()
     audio_file.write(res.content)
 
+
+# read from file
 with open("covid.txt", 'r') as f:
     text = f.readlines()
 
-text = ''.join(str(line) for line in text)
+text = [line.replace('\n', '') for line in text]
+#text = ''.join(str(line) for line in text)
 
-with open('./covid.mp3', 'wb') as audio_file:
-    res = tts.synthesize(text, accept='audio/mp3', voice='en-US_LisaV3Voice').get_result()
-    audio_file.write(res.content)
+counter = 0
+for sentence in text:
+    with open('./audio/{counter:04d}.mp3'.format(counter=counter), 'wb') as audio_file:
+        res = tts.synthesize(sentence, accept='audio/mp3', voice='en-GB_JamesV3Voice').get_result()
+        audio_file.write(res.content)
+        counter +=1
+
+#with open('./covid.mp3', 'wb') as audio_file:
+#    res = tts.synthesize(text, accept='audio/mp3', voice='en-US_LisaV3Voice').get_result()
+#    audio_file.write(res.content)
