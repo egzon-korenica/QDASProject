@@ -17,16 +17,15 @@ tts = TextToSpeechV1(authenticator=authenticator)
 # set service url
 tts.set_service_url(url)
 
-with open('./speech.wav', 'wb') as audio_file:
-    res = tts.synthesize("Hello WORLD WORLD WORLD WORLD", accept='audio/wav', voice='en-US_LisaV3Voice').get_result()
+with open('./speech.mp3', 'wb') as audio_file:
+    res = tts.synthesize("Hello WORLD WORLD WORLD WORLD", accept='audio/mp3', voice='en-US_LisaV3Voice').get_result()
     audio_file.write(res.content)
 
 with open("covid.txt", 'r') as f:
     text = f.readlines()
 
-text = [line.replace('\n', '') for line in text]
 text = ''.join(str(line) for line in text)
 
 with open('./covid.mp3', 'wb') as audio_file:
-    res = tts.synthesize(text, accept='audio/wav', voice='en-US_LisaV3Voice').get_result()
+    res = tts.synthesize(text, accept='audio/mp3', voice='en-US_LisaV3Voice').get_result()
     audio_file.write(res.content)

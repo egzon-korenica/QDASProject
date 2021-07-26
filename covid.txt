@@ -1,1 +1,5 @@
 Question one: How do you feel about covid?
+
+Question two: Did you get vaccinated?
+
+Question three: Was it stressful to stay isolated?
