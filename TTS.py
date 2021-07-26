@@ -9,6 +9,9 @@ apikey = 'EWtDUdU2pOw1TCVwiQtSPX7uSva3QSg8QBXzJpFX9Tbx'
 
 from ibm_watson import TextToSpeechV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+import os
+import playsound
+
 
 # setup service
 authenticator = IAMAuthenticator(apikey)
@@ -17,10 +20,11 @@ tts = TextToSpeechV1(authenticator=authenticator)
 # set service url
 tts.set_service_url(url)
 
+'''
 with open('./speech.mp3', 'wb') as audio_file:
     res = tts.synthesize("Hello WORLD WORLD WORLD WORLD", accept='audio/mp3', voice='en-US_LisaV3Voice').get_result()
     audio_file.write(res.content)
-
+'''
 
 # read from file
 with open("covid.txt", 'r') as f:
@@ -29,13 +33,26 @@ with open("covid.txt", 'r') as f:
 text = [line.replace('\n', '') for line in text]
 #text = ''.join(str(line) for line in text)
 
+
 counter = 0
 for sentence in text:
-    with open('./audio/{counter:04d}.mp3'.format(counter=counter), 'wb') as audio_file:
+    with open('./audio/{counter:02d}.mp3'.format(counter=counter), 'wb') as audio_file:
         res = tts.synthesize(sentence, accept='audio/mp3', voice='en-GB_JamesV3Voice').get_result()
         audio_file.write(res.content)
         counter +=1
 
-#with open('./covid.mp3', 'wb') as audio_file:
-#    res = tts.synthesize(text, accept='audio/mp3', voice='en-US_LisaV3Voice').get_result()
-#    audio_file.write(res.content)
+
+directory = './audio'
+counter = 0
+for filename in os.listdir(directory):
+    txt = input("Next question or repeat? n or r: ")
+    if txt == "n":
+              fname = "0" + str(counter) + ".mp3"
+              print(fname)
+              playsound.playsound("./audio/" + fname, True)
+              response = input("share your thoughts: ")
+              with open("response.txt", "a") as f:
+                f.write(response)
+                f.write("\n")
+                f.close()
+    counter +=1
