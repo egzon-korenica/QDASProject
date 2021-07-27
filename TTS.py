@@ -11,7 +11,7 @@ from ibm_watson import TextToSpeechV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 import os
 import playsound
-
+import secondtest
 
 # setup service
 authenticator = IAMAuthenticator(apikey)
@@ -34,25 +34,28 @@ text = [line.replace('\n', '') for line in text]
 #text = ''.join(str(line) for line in text)
 
 
-counter = 0
+ctr = 0
 for sentence in text:
-    with open('./audio/{counter:02d}.mp3'.format(counter=counter), 'wb') as audio_file:
+    with open('./audio/{ctr:02d}.mp3'.format(ctr=ctr), 'wb') as audio_file:
         res = tts.synthesize(sentence, accept='audio/mp3', voice='en-GB_JamesV3Voice').get_result()
         audio_file.write(res.content)
-        counter +=1
+        ctr +=1
 
 
 directory = './audio'
-counter = 0
+ctr = 0
 for filename in os.listdir(directory):
     txt = input("Next question or repeat? n or r: ")
     if txt == "n":
-              fname = "0" + str(counter) + ".mp3"
+              fname = "0" + str(ctr) + ".mp3"
               print(fname)
               playsound.playsound("./audio/" + fname, True)
+              '''
               response = input("share your thoughts: ")
               with open("response.txt", "a") as f:
                 f.write(response)
                 f.write("\n")
                 f.close()
-    counter +=1
+            '''
+              exec(open("secondtest.py").read())
+    ctr +=1
