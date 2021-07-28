@@ -3,6 +3,7 @@ import threading
 import pyaudio
 import wave
 import os
+import glob
 
 class App():
     chunk = 1024
@@ -43,7 +44,7 @@ class App():
         self.isrecording = False
         print('recording complete')
         #self.filename=input('the filename?'
-        TARGET_DIR = "interviews/person"
+        TARGET_DIR = str(max(glob.glob(os.path.join('interviews', '*/')), key=os.path.getmtime))[:-1]
         self.fn = TARGET_DIR + "/response" + ".wav"
         #self.checkFile(self.filename))
         #os.makedirs(os.path.dirname(self.checkFile(self.filename)), exist_ok=True)

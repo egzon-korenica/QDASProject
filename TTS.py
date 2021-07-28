@@ -26,6 +26,20 @@ with open('./speech.mp3', 'wb') as audio_file:
     audio_file.write(res.content)
 '''
 
+# create interview folder
+
+def interviewDir():
+    i=1
+    keepGoing=True
+    while keepGoing:
+      path = "interviews/interview_{}/".format(i)
+      if not os.path.exists(path):
+        os.makedirs(os.path.dirname("interviews/interview_{}/".format(i)), exist_ok=False)
+        keepGoing = False
+      i += 1
+
+interviewDir()
+
 # read from file
 with open("covid.txt", 'r') as f:
     text = f.readlines()
