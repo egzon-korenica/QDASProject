@@ -11,7 +11,7 @@ from ibm_watson import TextToSpeechV1
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 import os
 import playsound
-import audiorec
+import secondtest
 
 # setup service
 authenticator = IAMAuthenticator(apikey)
@@ -57,5 +57,5 @@ for filename in os.listdir(directory):
                 f.write("\n")
                 f.close()
             '''
-              exec(open("audiorec.py").read())
+              exec(open("secondtest.py").read())
     ctr +=1
