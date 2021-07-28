@@ -2,7 +2,7 @@ import playsound
 import os
 from pathlib import Path
 
-    
+'''    
 directory = './audio'    
 counter = 0
 for filename in os.listdir(directory):
@@ -17,7 +17,12 @@ for filename in os.listdir(directory):
                 f.write("\n")
                 f.close()
     counter +=1 
+'''
+TARGET_DIR = "interviews/person"
+n = 1
 
-        
-      
-
+while os.path.isdir(path):
+        path = os.path.join(TARGET_DIR + str(n))
+      n+=1
+      print(str(n))
+      os.mkdir(path) 
