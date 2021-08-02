@@ -26,7 +26,9 @@ def getToneAnalysis(dir):
 
 results = getToneAnalysis("interviews/interview_1/output.txt")
 
+count = 1
 for key, tones in results.items():
     for key, tone in tones.items():
         for i in tone:
-            print(i.get('tone_name'))
+            print("Tone in response " + str(count) + ": " + i.get('tone_name'))
+            count +=1
