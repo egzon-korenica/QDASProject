@@ -11,14 +11,14 @@ stt = SpeechToTextV1(authenticator = authenticator)
 stt.set_service_url(URL)
 
 files = []
-for filename in os.listdir('interviews/interview_1'):
+for filename in os.listdir('interviews/interview_2'):
     if filename.endswith('.wav'):
         files.append(filename)
 files.sort()
 
 results = []
 for filename in files:
-    with open("interviews/interview_1/" + filename,'rb') as f:
+    with open("interviews/interview_2/" + filename,'rb') as f:
         res = stt.recognize(audio=f, content_type='audio/wav', model='en-US_NarrowbandModel', continuous=True, inactivity_timeout=300).get_result()
         results.append(res)
 
@@ -29,5 +29,5 @@ for file in results:
     for result in file['results']:
         text.append(result['alternatives'][0]['transcript'].rstrip() + '.\n\n')
 
-with open('interviews/interview_1/output.txt', 'w') as out:
+with open('interviews/interview_2/output.txt', 'w') as out:
     out.writelines(text)

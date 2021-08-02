@@ -12,6 +12,8 @@ from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
 import os
 import playsound
 import audiorec
+import TA
+import STT
 
 # setup service
 authenticator = IAMAuthenticator(apikey)
@@ -73,3 +75,8 @@ for filename in os.listdir(directory):
             '''
               exec(open("audiorec.py").read())
     ctr +=1
+
+
+exec(open("audiorec.py").read())
+TARGET_DIR = str(max(glob.glob(os.path.join('interviews', '*/')), key=os.path.getmtime))[:-1] + "/output.txt"
+TA.getToneAnalysis(TARGET_DIR)

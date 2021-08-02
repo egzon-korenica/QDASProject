@@ -10,22 +10,17 @@ ta.set_service_url(url)
 
 #res = ta.tone("This sucks, i wish i wasnt here").get_result()
 
-chat = [
-    {
-    "text": "I feel great, it's sunny outside, and I've got all my work done",
-    "user":"He who shall not be named"
-    },
-    {
-    "text":"This sucks, I have like 500 hours more coding to do. This is going to take all weekend",
-    "user": "Nick"
-    },
-]
-
 with open("interviews/interview_1/output.txt", "r") as file:
     first_line = file.readline()
     for last_line in file:
         pass
 
-res = ta.tone(first_line)
-print(res)
-print(first_line)
+def getToneAnalysis(dir):
+    with open(dir, "r") as file:
+        first_line = file.readline()
+        for last_line in file:
+            pass
+    res = ta.tone(first_line).get_result()
+    print(res)
+
+getToneAnalysis("interviews/interview_1/output.txt")
