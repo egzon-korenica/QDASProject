@@ -3,6 +3,7 @@ url = "https://api.eu-gb.tone-analyzer.watson.cloud.ibm.com/instances/372cbdb1-3
 
 from ibm_watson import ToneAnalyzerV3
 from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+import json
 
 authenticator = IAMAuthenticator(apikey)
 ta = ToneAnalyzerV3(version='2021-08-02', authenticator = authenticator)
@@ -21,6 +22,11 @@ def getToneAnalysis(dir):
         for last_line in file:
             pass
     res = ta.tone(first_line).get_result()
-    print(res)
+    return res
 
-getToneAnalysis("interviews/interview_1/output.txt")
+results = getToneAnalysis("interviews/interview_1/output.txt")
+
+for key, tones in results.items():
+    for key, tone in tones.items():
+        for i in tone:
+            print(i.get('tone_name'))
