@@ -14,6 +14,7 @@ import playsound
 import audiorec
 import TA
 import STT
+import NLU
 
 # setup service
 authenticator = IAMAuthenticator(apikey)
@@ -79,4 +80,5 @@ for filename in os.listdir(directory):
 
 exec(open("audiorec.py").read())
 TARGET_DIR = str(max(glob.glob(os.path.join('interviews', '*/')), key=os.path.getmtime))[:-1] + "/output.txt"
-TA.getToneAnalysis(TARGET_DIR)
+TA.getToneNames(TARGET_DIR)
+NLU.getKeywords(TARGET_DIR)

@@ -24,11 +24,15 @@ def getToneAnalysis(dir):
     res = ta.tone(first_line).get_result()
     return res
 
-results = getToneAnalysis("interviews/interview_1/output.txt")
 
-count = 1
-for key, tones in results.items():
-    for key, tone in tones.items():
-        for i in tone:
-            print("Tone in response " + str(count) + ": " + i.get('tone_name'))
-            count +=1
+def getToneNames(dir):
+    results = getToneAnalysis(dir)
+
+    count = 1
+    for key, tones in results.items():
+        for key, tone in tones.items():
+            for i in tone:
+                print("Tone in response " + str(count) + ": " + i.get('tone_name'))
+                count +=1
+
+getToneNames("interviews/interview_1/output.txt")

@@ -15,17 +15,23 @@ natural_language_understanding = NaturalLanguageUnderstandingV1(
 
 natural_language_understanding.set_service_url(url)
 
-with open("interviews/interview_1/output.txt", "r") as file:
-    first_line = file.readline()
-    for last_line in file:
-        pass
+def getKeywords(dir):
+    with open(dir, "r") as file:
+        first_line = file.readline()
+        for last_line in file:
+            pass
 
-response = natural_language_understanding.analyze(
-    #text='IBM is an American multinational technology company headquartered in Armonk, New York, United States with operations in over 170 countries.',
-    text = first_line,
-    features=Features(
-        #entities=EntitiesOptions(emotion=True, sentiment=True, limit=2),
-        keywords=KeywordsOptions(emotion=True, sentiment=True,
-                                 limit=50))).get_result()
+    response = natural_language_understanding.analyze(
+        #text='IBM is an American multinational technology company headquartered in Armonk, New York, United States with operations in over 170 countries.',
+        text = first_line,
+        features=Features(
+            #entities=EntitiesOptions(emotion=True, sentiment=True, limit=2),
+            keywords=KeywordsOptions(emotion=True, sentiment=True,
+                                     limit=50))).get_result()
 
-print(json.dumps(response, indent=2))
+    enc = json.dumps(response, indent=2)
+    dec = json.loads(enc)
+
+    for keyword in dec['keywords']:
+            if keyword['relevance'] > 0.5:
+                print(keyword['text'])
