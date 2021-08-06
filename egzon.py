@@ -1,75 +1,57 @@
-import playsound
-import os
+apikey = "KobRgKpaAwmvjjOmKoZIxPZcQ33f0Y3ap1Y_Rz3tX4e7"
+url = "https://api.eu-gb.tone-analyzer.watson.cloud.ibm.com/instances/372cbdb1-3eb7-4948-8390-c99205593cb7"
 
-'''    
-directory = './audio'    
-counter = 0
-for filename in os.listdir(directory):
-    txt = input("Next question or repeat? n or r: ")
-    if txt == "n":
-              fname = "0" + str(counter) + ".mp3"
-              print(fname)
-              playsound.playsound("./audio/" + fname, True)
-              response = input("share your thoughts: ")
-              with open("response.txt", "a") as f: 
-                f.write(response)
-                f.write("\n")
-                f.close()
-    counter +=1 
+from ibm_watson import ToneAnalyzerV3
+from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
+import json
 
-TARGET_DIR = "interviews/person"
-n = 1
+authenticator = IAMAuthenticator(apikey)
+ta = ToneAnalyzerV3(version='2021-08-02', authenticator = authenticator)
+ta.set_service_url(url)
 
-while os.path.isdir(path):
-        path = os.path.join(TARGET_DIR + str(n))
-      n+=1
-      print(str(n))
-      os.mkdir(path) 
+#res = ta.tone("This sucks, i wish i wasnt here").get_result()
 
 '''
-import os
+with open("interviews/interview_1/output.txt", "r") as file:
+    first_line = file.readline()
+    for last_line in file:
+        pass
+'''
+
+def getToneAnalysis(dir):
+    with open(dir, "r") as file:
+        first_line = file.readline()
+        for last_line in file:
+            pass
+    res = ta.tone(first_line).get_result()
+    return res
 
 
-import os, glob
+results = getToneAnalysis("interviews/interview_1/output.txt")
+
+enc = json.dumps(results)
+dec = json.loads(enc)
+
+for i in dec['document_tone']['tones']:
+    print(i['tone_name'])
 
 '''
-print(str(max(glob.glob(os.path.join('interviews', '*/')), key=os.path.getmtime)))
+def getToneNames(dir):
+    results = getToneAnalysis(dir)
 
-foldername = str(max(glob.glob(os.path.join('interviews', '*/')), key=os.path.getmtime))[:-1]
-
-def checkPath(filePath):
-        if os.path.exists(filePath):
-            numb = 1
-            while True:
-                newPath = "{0}_{2}{1}".format(*os.path.splitext(filePath) + (numb,))
-                if os.path.exists(newPath):
-                    numb += 1
-                else:
-                    return newPath
-        return filePath
+    count = 1
+    for key, tones in results.items():
+        for key, tone in tones.items():
+            for i in tone:
+                print("Tone in response " + str(count) + ": " + i.get('tone_name'))
+                count +=1
 
 
-print(checkPath(foldername))
-
-os.mkdir(checkPath(foldername))
-
-
-
-
-
-import os
-i=1
-keepGoing=True
-while keepGoing:
-  path = "interviews/interview_{}/".format(i)
-  if not os.path.exists(path):
-    os.makedirs(os.path.dirname("interviews/interview_{}/".format(i)), exist_ok=False)
-    keepGoing = False
-  i += 1
-
+getToneNames("interviews/interview_1/output.txt")
 '''
 
 
-foldername = str(max(glob.glob(os.path.join('interviews', '*/')), key=os.path.getmtime))[:-1]
+txt = "interviews/interview_1/output.txt"
 
-print(foldername)
+x = txt.replace("output", "keywords")
+print(x)

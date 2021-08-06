@@ -77,8 +77,7 @@ for filename in os.listdir(directory):
               exec(open("audiorec.py").read())
     ctr +=1
 
-
-exec(open("audiorec.py").read())
-TARGET_DIR = str(max(glob.glob(os.path.join('interviews', '*/')), key=os.path.getmtime))[:-1] + "/output.txt"
-TA.getToneNames(TARGET_DIR)
-NLU.getKeywords(TARGET_DIR)
+TARGET_DIR = str(max(glob.glob(os.path.join('interviews', '*/')), key=os.path.getmtime))[:-1] + "/"
+STT.convertToText(TARGET_DIR)
+NLU.getKeywords(TARGET_DIR + "output.txt")
+TA.getToneAnalysis(TARGET_DIR + "output.txt")

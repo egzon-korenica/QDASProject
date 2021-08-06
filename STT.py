@@ -10,24 +10,25 @@ authenticator = IAMAuthenticator(APIKEY)
 stt = SpeechToTextV1(authenticator = authenticator)
 stt.set_service_url(URL)
 
-files = []
-for filename in os.listdir('interviews/interview_2'):
-    if filename.endswith('.wav'):
-        files.append(filename)
-files.sort()
+def convertToText(dir):
+    files = []
+    for filename in os.listdir(dir):
+        if filename.endswith('.wav'):
+            files.append(filename)
+    files.sort()
 
-results = []
-for filename in files:
-    with open("interviews/interview_2/" + filename,'rb') as f:
-        res = stt.recognize(audio=f, content_type='audio/wav', model='en-US_NarrowbandModel', continuous=True, inactivity_timeout=300).get_result()
-        results.append(res)
+    results = []
+    for filename in files:
+        with open(dir + filename,'rb') as f:
+            res = stt.recognize(audio=f, content_type='audio/wav', model='en-US_NarrowbandModel', continuous=True, inactivity_timeout=300).get_result()
+            results.append(res)
 
-print(results)
+    #print(results)
 
-text = []
-for file in results:
-    for result in file['results']:
-        text.append(result['alternatives'][0]['transcript'].rstrip() + '.\n\n')
+    text = []
+    for file in results:
+        for result in file['results']:
+            text.append(result['alternatives'][0]['transcript'].rstrip() + '.\n\n')
 
-with open('interviews/interview_2/output.txt', 'w') as out:
-    out.writelines(text)
+    with open(dir + 'output.txt', 'w') as out:
+        out.writelines(text)

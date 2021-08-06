@@ -32,6 +32,12 @@ def getKeywords(dir):
     enc = json.dumps(response, indent=2)
     dec = json.loads(enc)
 
+    text = []
+    count = 1
     for keyword in dec['keywords']:
             if keyword['relevance'] > 0.5:
+                text.append("Keyword " + str(count) + ": " + keyword['text'] + '\n')
                 print(keyword['text'])
+                count += 1
+    with open(dir.replace("output", "keywords"), 'w') as out:
+        out.writelines(text)
