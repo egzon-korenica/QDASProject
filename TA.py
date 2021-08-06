@@ -31,7 +31,7 @@ def getToneAnalysis(dir):
     count = 1
     text = []
     for i in dec['document_tone']['tones']:
-        print("Tone in response " + str(count) + ": " + i['tone_name'])
+        print("Tone " + str(count) + ": " + i['tone_name'])
         text.append("Tone in response " + str(count) + ": " + i['tone_name'] + '\n')
         count +=1
     with open(dir.replace("output", "toneanalysis"), 'w') as out:

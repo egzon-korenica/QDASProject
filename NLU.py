@@ -37,7 +37,7 @@ def getKeywords(dir):
     for keyword in dec['keywords']:
             if keyword['relevance'] > 0.5:
                 text.append("Keyword " + str(count) + ": " + keyword['text'] + '\n')
-                print(keyword['text'])
+                print("Keyword " + str(count) + keyword['text'])
                 count += 1
     with open(dir.replace("output", "keywords"), 'w') as out:
         out.writelines(text)
